@@ -24,4 +24,6 @@ Route::group([
     $router->resource('settings', SettingController::class);//系统设置
 
     $router->resource('user-speaks', UserSpeakController::class);//文章评论
+
+    $router->resource('users', UserController::class);//用户管理
 });

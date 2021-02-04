@@ -14,6 +14,6 @@
 Route::get('/', function () {
     // return view('welcome');
     // dd('request');
-    return redirect('admin');
+    return redirect('admin/settings');
 });
 
