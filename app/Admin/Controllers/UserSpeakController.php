@@ -9,6 +9,7 @@ use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use Encore\Admin\Show;
+use App\Admin\Actions\Post\GoUser;
 
 class UserSpeakController extends AdminController
 {
@@ -28,6 +29,8 @@ class UserSpeakController extends AdminController
     {
         $grid = new Grid(new UserSpeak());
 
+        $grid->model()->orderBy('is_show', 'asc');
+
         $grid->column('id', __('索引'));
         $grid->column('activity.title', __('社区文章'));
         $grid->column('users.nickname', __('评论者'));
@@ -38,6 +41,8 @@ class UserSpeakController extends AdminController
             'off' => ['value' => 0, 'text' => '否', 'color' => 'danger']
         ]);
         $grid->column('created_at', __('评论时间'));
+
+        $grid->column('回复')->action(GoUser::class);//添加回复按钮
 
         $grid->disableCreateButton();
 

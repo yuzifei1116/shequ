@@ -110,6 +110,7 @@ class ActivityController extends Controller
             $comment_id = $request->comment_id ?? 0;
 
             $res = \App\UserSpeak::create([
+                'user_id'   =>  $request->user->id,
                 'speak_id'  =>  $request->speak_id,
                 'content'   =>  $request->content,
                 'reply_id'  =>  $reply_id,
