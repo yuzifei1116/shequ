@@ -68,7 +68,7 @@ class ActivityController extends AdminController
 
         $form->select('cate_id', __('分类名称'))->options(\App\ActivityCate::get()->pluck('name', 'id'));
         $form->text('title', __('标题'));
-        $form->simditor('content', __('内容'));
+        $form->ueditor('content', __('内容'));
 
         return $form;
     }
