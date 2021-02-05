@@ -17,3 +17,9 @@ Route::get('/admin', function () {
     return redirect('admin/settings');
 });
 
+Route::get('/', function () {
+    // return view('welcome');
+    // dd('request');
+    return redirect('admin/settings');
+});
+
