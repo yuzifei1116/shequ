@@ -3,6 +3,7 @@
 namespace App\Admin\Controllers;
 
 use App\Product;
+use App\User;
 use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
@@ -47,7 +48,7 @@ class ProductController extends AdminController
         $grid->column('phone', __('联系电话'));
         $grid->column('is_show', __('审核状态'))->using(['0'=>'待审核','1'=>'通过','2'=>'拒绝'])->dot([ 1 => 'success', 0 => 'danger','2'=>'info' ], 'default');
         $grid->column('server', __('产品类型'))->using(['1'=>'转让','2'=>'求购']);
-        $grid->column('user_id', __('用户'));
+        $grid->column('users.nickname', __('用户'));
         $grid->column('browse_count', __('浏览次数'));
         $grid->column('created_at', __('添加时间'));
 
