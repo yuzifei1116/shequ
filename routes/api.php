@@ -23,6 +23,11 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::post('auth/code', 'AuthController@code');
 
 /**
+ * 首页
+ */
+Route::get('com_index', 'Community\IndexController@com_index');
+
+/**
  * 授权路由
  */
 Route::middleware('wechat')->group(function() {
@@ -41,11 +46,6 @@ Route::middleware('wechat')->group(function() {
      * 获取手机号
      */
     Route::post('user_phone', 'AuthController@user_phone');
-
-    /**
-     * 首页
-     */
-    Route::get('com_index', 'Community\IndexController@com_index');
 
     /**
      * 自增浏览次数
