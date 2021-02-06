@@ -54,7 +54,7 @@ class UserController extends Controller
 
                 foreach($data as $k=>&$v){
 
-                    $v['end_time'] = date('Y-m-d H:i',$v['end_time']);
+                    $v['end_time'] = date('Y-m-d',$v['end_time']);
 
                     switch ($v['rate_cate']) {
                         case '1':
