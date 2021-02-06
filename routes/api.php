@@ -30,12 +30,12 @@ Route::get('com_index', 'Community\IndexController@com_index');
 /**
  * 产品筛选
  */
-Route::get('api/product_like', 'Community\IndexController@product_like');
+Route::get('product_like', 'Community\IndexController@product_like');
 
 /**
  * 产品列表
  */
-Route::get('api/product', 'Community\ProductController@product');
+Route::get('product', 'Community\ProductController@product');
 
 /**
  * 授权路由
