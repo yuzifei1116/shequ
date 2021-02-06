@@ -14,7 +14,7 @@ class AddImgToActivitysTable extends Migration
     public function up()
     {
         Schema::table('activitys', function (Blueprint $table) {
-            
+            $table->string('img')->nullable()->comment('图片')->after('title');
         });
     }
 
