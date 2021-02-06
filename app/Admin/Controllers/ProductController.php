@@ -81,7 +81,7 @@ class ProductController extends AdminController
 
         $show->field('id', __('索引'));
         $show->field('name', __('产品名称'));
-        $show->field('cate.title', __('产品分类'));
+        $show->field('cate_id', __('产品分类'))->using(['1'=>'征信类','2'=>'地产类','3'=>'工商企业类','4'=>'资金池类','5'=>'逾期类']);
         $show->field('rate_cate', __('收益分配方式'))->using(['1'=>'季度','2'=>'半年','3'=>'年度']);
         $show->field('annualized', __('预计年化 单位：%'));
         $show->field('turn_money', __('金额 单位：万'));

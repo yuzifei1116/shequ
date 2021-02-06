@@ -13,8 +13,12 @@ class UserController extends Controller
     public function user(Request $request)
     {
         try {
+
+            $user = $request->user;
+
+            $user->phone = phone();
             
-            return result($request->user);
+            return result($user);
 
         } catch (\Throwable $th) {
             
