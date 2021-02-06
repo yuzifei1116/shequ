@@ -60,12 +60,29 @@ class IndexController extends Controller
 
                 foreach($data['new_turn'] as $k=>&$v){
                     $v['end_time'] = date('Y-m-d',$v['end_time']);
+                    switch ($v['rate_cate']) {
+                        case '1':
+                            $v['rate_cate'] = '季度';
+                            break;
+
+                        case '2':
+                            $v['rate_cate'] = '半年';
+                            break;
+
+                        case '3':
+                            $v['rate_cate'] = '年度';
+                            break;
+                        
+                        default:
+                            # code...
+                            break;
+                    }
                 }
 
             }
 
             //底部文章分类
-            $data['cate'] = \App\ActivityCate::select('name')->where('htm_id',1)->get();
+            $data['cate'] = \App\ActivityCate::select('name')->limit(3)->where('htm_id',1)->get();
 
             return result($data); 
             
