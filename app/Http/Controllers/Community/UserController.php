@@ -54,6 +54,26 @@ class UserController extends Controller
 
                 foreach($data as $k=>&$v){
 
+                    $v['end_time'] = date('Y-m-d H:i',$v['end_time']);
+
+                    switch ($v['rate_cate']) {
+                        case '1':
+                            $v['rate_cate'] = '季度';
+                            break;
+        
+                        case '2':
+                            $v['rate_cate'] = '半年';
+                            break;
+        
+                        case '3':
+                            $v['rate_cate'] = '年度';
+                            break;
+                        
+                        default:
+                            # code...
+                            break;
+                    }
+
                     switch ($v['cate_id']) {
                         case '1':
                             $v['cate_name'] = '征信类';
