@@ -95,24 +95,6 @@ class IndexController extends Controller
     }
 
     /**
-     * 筛选条件
-     */
-    public function like(Request $request)
-    {
-        try {
-            
-            $data = [
-                
-            ];
-
-        } catch (\Throwable $th) {
-
-            return error();
-
-        }
-    }
-
-    /**
      * 产品筛选
      */
     public function product_like(Request $request)
@@ -139,8 +121,16 @@ class IndexController extends Controller
                         $model->orderBy('end_time','desc');
                     }
 
-                    if($request->b){
-                        $model->where('cate_id',$request->b);
+                    if($request->b && $request->b == '0'){
+                        $model->where('cate_id',1);
+                    }elseif ($request->b && $request->b == '1') {
+                        $model->where('cate_id',2);
+                    }elseif ($request->b && $request->b == '2') {
+                        $model->where('cate_id',3);
+                    }elseif ($request->b && $request->b == '3') {
+                        $model->where('cate_id',4);
+                    }elseif ($request->b && $request->b == '4') {
+                        $model->where('cate_id',5);
                     }
 
                     if($request->c && $request->c == '0'){

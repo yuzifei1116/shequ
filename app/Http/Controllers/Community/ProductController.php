@@ -58,8 +58,37 @@ class ProductController extends Controller
             //发布产品列表
             $data['fa_product'] = \App\Product::where('is_site',0)->where('is_show',1)->where('server',1)->orderby('id','desc')->get();
 
-            foreach($data['fa_product'] as $k=>&$v){
-                $v['cate_name'] = \App\ProCate::where('id',$v['cate_id'])->value('title');
+            if($data['fa_product']){
+
+                foreach($data['fa_product'] as $k=>&$v){
+
+                    switch ($v['cate_id']) {
+                        case '1':
+                            $v['cate_name'] = '征信类';
+                            break;
+        
+                        case '2':
+                            $v['cate_name'] = '地产类';
+                            break;
+        
+                        case '3':
+                            $v['cate_name'] = '工商企业类';
+                            break;
+    
+                        case '4':
+                            $v['cate_name'] = '资金池类';
+                            break;
+                        
+                        case '5':
+                            $v['cate_name'] = '逾期类';
+                            break;
+                        
+                        default:
+                            # code...
+                            break;
+                    }
+                }
+
             }
 
             return result($data['fa_product']);

@@ -31,7 +31,7 @@ class ProductController extends AdminController
 
         $grid->column('id', __('索引'));
         $grid->column('name', __('产品名称'));
-        $grid->column('cate.title', __('产品分类'));
+        $grid->column('cate_id', __('产品分类'))->using(['1'=>'征信类','2'=>'地产类','3'=>'工商企业类','4'=>'资金池类','5'=>'逾期类']);
         $grid->column('rate_cate', __('收益分配方式'))->using(['1'=>'季度','2'=>'半年','3'=>'年度']);
         $grid->column('annualized', __('预计年化'))->help('单位：%');
         $grid->column('turn_money', __('金额'))->help('单位：万')->label('info');

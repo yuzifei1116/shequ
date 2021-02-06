@@ -26,6 +26,5 @@ Route::group([
     $router->resource('user-speaks', UserSpeakController::class);//文章评论
 
     $router->resource('users', UserController::class);//用户管理
-
-    $router->resource('pro-cates', ProCateController::class);//产品类别
+    
 });
