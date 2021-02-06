@@ -26,6 +26,12 @@ class ActivityController extends Controller
 
             }
 
+            foreach($data as $k=>&$v){
+
+                $v['img'] = env('APP_URL').'storage/'.$v['img'];
+
+            }
+
             return result($data);
 
         } catch (\Throwable $th) {
