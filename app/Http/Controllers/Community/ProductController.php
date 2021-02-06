@@ -133,6 +133,14 @@ class ProductController extends Controller
 
             $data['end_time'] = date('Y-m-d',$data['end_time']);
 
+            $res = \App\With::where('user_id',$request->user->id)->where('activity_id',$request->id)->where('cate',1)->count() ?? 0;
+
+            if($res == 0){
+                $data['is_dian'] = 0;
+            }else{
+                $data['is_dian'] = 1;
+            }
+
             return result($data);
 
         } catch (\Throwable $th) {

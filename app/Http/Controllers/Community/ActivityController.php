@@ -42,7 +42,7 @@ class ActivityController extends Controller
             $data['with'] = \App\With::where('activity_id',$request->id)->count() ?? 0;
 
             //用户是否点赞
-            $data['is_with'] = \App\With::where('activity_id',$request->id)->where('user_id',$request->user->id)->count() ?? 0;
+            $data['is_with'] = \App\With::where('activity_id',$request->id)->where('user_id',$request->user->id)->where('cate',2)->count() ?? 0;
 
             //评论区
             $data['speak'] = \App\UserSpeak::where('speak_id',$request->id)->where('reply_id',0)->where('comment_id',0)->orderBy('created_at','desc')->where('is_show',1)->get();
@@ -132,20 +132,35 @@ class ActivityController extends Controller
     public function user_with(Request $request)
     {
         try {
-            
-            if(!$request->id) return error('请选择社区文章');
 
-            $res = \App\With::where('user_id',$request->user->id)->where('activity_id',$request->id)->count() ?? 0;
+            if(!$request->cate) return error('请选择点赞类型');
+            
+            if(!$request->id) return error('请选择id');
+
+            if($request->cate == 1){
+
+                $res = \App\With::where('user_id',$request->user->id)->where('activity_id',$request->id)->where('cate',1)->count() ?? 0;
+
+            }else{
+
+                $res = \App\With::where('user_id',$request->user->id)->where('activity_id',$request->id)->where('cate',2)->count() ?? 0;
+
+            }
 
             if($res != 0) return error('已经点过赞');
 
-            if($res == 0){
+            if($request->cate == 1){
 
-                $data = \App\With::create(['user_id'=>$request->user->id,'activity_id'=>$request->id]);
+                $data = \App\With::create(['user_id'=>$request->user->id,'activity_id'=>$request->id,'name'=>\App\Product::where('id',$request->id)->value('name'),'phone'=>$request->user->tel]);
 
-                if($data) return result('点赞成功');
+            }else{
+
+                $data = \App\With::create(['user_id'=>$request->user->id,'activity_id'=>$request->id,'name'=>\App\Activity::where('id',$request->id)->value('title'),'phone'=>$request->user->tel,'cate'=>2]);
 
             }
+
+
+            if($data) return result('点赞成功');
 
         } catch (\Throwable $th) {
             
