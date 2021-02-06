@@ -17,6 +17,8 @@ class UserController extends Controller
             $user = $request->user;
 
             $user->phone = phone();
+
+            $user->content = \App\Setting::value('content');
             
             return result($user);
 
