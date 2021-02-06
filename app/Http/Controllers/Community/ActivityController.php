@@ -13,20 +13,33 @@ class ActivityController extends Controller
     public function actList(Request $request)
     {
         try {
+
+            //轮播图
+            $data['img'] = \App\Plug::where('is_show',1)->orderBy('created_at','desc')->get();
+
+            if($data['img']){
+
+                foreach($data['img'] as $k=>&$v){
+
+                    $v['img'] = env('APP_URL').'storage/'.$v['img'];
+    
+                }
+
+            }
             
             if(!$request->id){
 
                 $id = \App\ActivityCate::where('htm_id',2)->value('id');
 
-                $data = \App\Activity::where('cate_id',$id)->get();;
+                $data['act'] = \App\Activity::where('cate_id',$id)->get();;
 
             }else{
 
-                $data = \App\Activity::where('cate_id',$request->id)->get();
+                $data['act'] = \App\Activity::where('cate_id',$request->id)->get();
 
             }
 
-            foreach($data as $k=>&$v){
+            foreach($data['act'] as $k=>&$v){
 
                 $v['img'] = env('APP_URL').'storage/'.$v['img'];
 

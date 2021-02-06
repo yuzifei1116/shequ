@@ -16,19 +16,6 @@ class IndexController extends Controller
         try {
 
             $data = array();
-            
-            //轮播图
-            $data['img'] = \App\Plug::where('is_show',1)->orderBy('created_at','desc')->get();
-
-            if($data['img']){
-
-                foreach($data['img'] as $k=>&$v){
-
-                    $v['img'] = env('APP_URL').'storage/'.$v['img'];
-    
-                }
-
-            }
 
             //产品转让信息总数
             $data['turn_count'] = \App\Product::where('is_site',0)->where('is_show',1)->where('server',1)->count();
