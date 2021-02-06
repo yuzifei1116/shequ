@@ -59,7 +59,7 @@ class ProductController extends Controller
             $data['fa_product'] = \App\Product::where('is_site',0)->where('is_show',1)->where('server',1)->orderby('id','desc')->get();
 
             foreach($data['fa_product'] as $k=>&$v){
-                $v['cate_name'] = \App\ProCate::where('id',$data['cate_id'])->value('title');
+                $v['cate_name'] = \App\ProCate::where('id',$v['cate_id'])->value('title');
             }
 
             $data['cate'] = \App\ProCate::get();
