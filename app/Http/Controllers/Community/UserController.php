@@ -52,7 +52,7 @@ class UserController extends Controller
 
             if($data){
 
-                foreach($data['fa_product'] as $k=>&$v){
+                foreach($data as $k=>&$v){
 
                     switch ($v['cate_id']) {
                         case '1':
