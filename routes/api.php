@@ -75,7 +75,7 @@ Route::middleware('wechat')->group(function() {
     /**
      * 发布转让产品
      */
-    Route::post('release_product', 'Community\ProductController@release_product');
+    Route::get('release_product', 'Community\ProductController@release_product');
 
     /**
      * 产品详情
