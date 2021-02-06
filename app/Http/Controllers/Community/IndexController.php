@@ -101,7 +101,19 @@ class IndexController extends Controller
     {
         try {
 
-            $model = \App\Product::where('is_site',0)->where('is_show',1)->where('server',1);
+            $limit = $request->limit ? $request->limit : 6; 
+
+            $page  = $request->page ? $request->page - 1 : 0;
+
+            if(!is_numeric($page)){
+                return response()->json(['error'=>['message' => '参数错误!']]); 
+            }
+
+            $page   = $page < 0 ? 0 : $page ;
+
+            $page   = $page * $limit;
+
+            $model = \App\Product::where('is_site',0)->where('is_show',1)->where('server',1)->offset($page)->limit($limit);
 
             switch ($request->cate) {
                 case '1':
