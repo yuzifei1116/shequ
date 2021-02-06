@@ -58,7 +58,9 @@ class ProductController extends Controller
             //发布产品列表
             $data['fa_product'] = \App\Product::where('is_site',0)->where('is_show',1)->where('server',1)->orderby('id','desc')->get();
 
-            return result($data['fa_product']);
+            $data['cate'] = \App\ProCate::get();
+
+            return result($data);
 
         } catch (\Throwable $th) {
             
@@ -95,6 +97,8 @@ class ProductController extends Controller
                     # code...
                     break;
             }
+
+            $data['cate_name'] = \App\ProCate::where('id',$data['cate_id'])->value('title');
 
             $data['nickname'] = $data->users->nickname;
 
