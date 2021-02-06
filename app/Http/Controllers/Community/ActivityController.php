@@ -186,7 +186,6 @@ class ActivityController extends Controller
 
             }
 
-
             if($data) return result('点赞成功');
 
         } catch (\Throwable $th) {

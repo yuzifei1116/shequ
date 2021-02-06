@@ -28,6 +28,7 @@ class SettingController extends AdminController
 
         $grid->column('id', __('索引'));
         $grid->column('phone', __('联系电话'));
+        $grid->column('content', __('关于'));
 
         if(Setting::first()){
 
@@ -50,6 +51,7 @@ class SettingController extends AdminController
 
         $show->field('id', __('索引'));
         $show->field('phone', __('联系电话'));
+        $show->field('content', __('内容'));
 
         return $show;
     }
@@ -64,6 +66,7 @@ class SettingController extends AdminController
         $form = new Form(new Setting());
 
         $form->mobile('phone', __('联系电话'))->required();
+        $form->ueditor('content', __('关于'))->required();
 
         return $form;
     }
