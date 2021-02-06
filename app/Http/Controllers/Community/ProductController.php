@@ -62,9 +62,7 @@ class ProductController extends Controller
                 $v['cate_name'] = \App\ProCate::where('id',$v['cate_id'])->value('title');
             }
 
-            $data['cate'] = \App\ProCate::get();
-
-            return result($data);
+            return result($data['fa_product']);
 
         } catch (\Throwable $th) {
             

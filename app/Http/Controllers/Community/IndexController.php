@@ -101,7 +101,9 @@ class IndexController extends Controller
     {
         try {
             
-            $data = [];
+            $data = [
+                
+            ];
 
         } catch (\Throwable $th) {
 
