@@ -33,13 +33,13 @@ class ProductController extends Controller
 
             if($request->remark) $data['remark'] = $request->remark;
             
-            $data['phone'] = phone();
+            //$data['phone'] = phone();
             
             $data['user_id'] = $request->user->id;
 
             $result = \App\Product::create($data);
 
-            if($result) return result('发布成功'); else return error();
+            if($result) return result('发布成功');
 
         } catch (\Throwable $th) {
             
