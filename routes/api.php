@@ -38,6 +38,11 @@ Route::get('product_like', 'Community\IndexController@product_like');
 Route::get('product', 'Community\ProductController@product');
 
 /**
+ * 文章列表
+ */
+Route::get('actList', 'Community\ActivityController@actList');
+
+/**
  * 授权路由
  */
 Route::middleware('wechat')->group(function() {
@@ -71,11 +76,6 @@ Route::middleware('wechat')->group(function() {
      * 产品详情
      */
     Route::get('productFirst', 'Community\ProductController@productFirst');
-
-    /**
-     * 文章列表
-     */
-    Route::get('actList', 'Community\ActivityController@actList');
 
     /**
      * 文章详情

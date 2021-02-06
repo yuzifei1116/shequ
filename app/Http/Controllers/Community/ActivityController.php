@@ -14,9 +14,17 @@ class ActivityController extends Controller
     {
         try {
             
-            if(!$request->id) return error('请选择文章分类');
+            if(!$request->id){
 
-            $data = \App\Activity::where('cate_id',$request->id)->get();
+                $id = \App\ActivityCate::where('htm_id',2)->value(id);
+
+                $data = \App\Activity::where('cate_id',$id)->get();;
+
+            }else{
+
+                $data = \App\Activity::where('cate_id',$request->id)->get();
+
+            }
 
             return result($data);
 
