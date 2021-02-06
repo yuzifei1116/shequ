@@ -100,8 +100,56 @@ class IndexController extends Controller
     public function product_like(Request $request)
     {
         try {
-            
-            
+
+            $model = \App\Product::where('is_site',0)->where('is_show',1)->where('server',1);
+
+            switch ($request->cate) {
+                case '1':
+                    $model = where('name','like','%'.$request->name.'%');
+                    break;
+
+                case '2':
+                    if($request->a && $request->a == '0'){
+
+                    }elseif ($request->a && $request->a == '1') {
+                        $model->orderBy('turn_money','asc');
+                    }elseif ($request->a && $request->a == '2') {
+                        $model->orderBy('turn_money','desc');
+                    }elseif ($request->a && $request->a == '3') {
+                        $model->orderBy('end_time','asc');
+                    }elseif ($request->a && $request->a == '4') {
+                        $model->orderBy('end_time','desc');
+                    }
+
+                    if($request->b){
+                        $model->where('cate_id',$request->b);
+                    }
+
+                    if($request->c && $request->c == '0'){
+                        $model->where('turn_money','>',300);
+                    }elseif ($request->c && $request->c == '1') {
+                        $model->where('turn_money','<=',300);
+                    }
+
+                    if($request->d && $request->d == '0'){
+                        
+                    }elseif ($request->d && $request->d == '1') {
+                        $model->where('suv_day','<',90);
+                    }elseif ($request->d && $request->d == '2') {
+                        $model->whereBetween('suv_day',[91,185]);
+                    }elseif ($request->d && $request->d == '3') {
+                        $model->where('suv_day','>',185);
+                    }
+                    break;
+                
+                default:
+                    # code...
+                    break;
+            }
+
+            $data = $model->get();
+
+            return \result($data);
 
         } catch (\Throwable $th) {
 

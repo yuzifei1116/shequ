@@ -25,7 +25,7 @@ class ProductController extends Controller
 
             if(!$request->turn_money) return error('请填写金额'); else $data['turn_money'] = $request->turn_money;
 
-            if(!$request->end_time) return error('请填写预计到期日期'); else $data['end_time'] = $request->end_time;
+            if(!$request->end_time) return error('请填写预计到期日期'); else $data['end_time'] = strtotime($request->end_time);
 
             if(!$request->suv_day) return error('请填写剩余天数'); else $data['suv_day'] = $request->suv_day;
 
@@ -57,6 +57,10 @@ class ProductController extends Controller
             
             //发布产品列表
             $data['fa_product'] = \App\Product::where('is_site',0)->where('is_show',1)->where('server',1)->orderby('id','desc')->get();
+
+            foreach($data['fa_product'] as $k=>&$v){
+                $v['cate_name'] = \App\ProCate::where('id',$data['cate_id'])->value('title');
+            }
 
             $data['cate'] = \App\ProCate::get();
 
@@ -97,8 +101,6 @@ class ProductController extends Controller
                     # code...
                     break;
             }
-
-            $data['cate_name'] = \App\ProCate::where('id',$data['cate_id'])->value('title');
 
             $data['nickname'] = $data->users->nickname;
 

@@ -28,6 +28,16 @@ Route::post('auth/code', 'AuthController@code');
 Route::get('com_index', 'Community\IndexController@com_index');
 
 /**
+ * 产品筛选
+ */
+Route::get('product_like', 'Community\IndexController@product_like');
+
+/**
+ * 产品列表
+ */
+Route::get('product', 'Community\ProductController@product');
+
+/**
  * 授权路由
  */
 Route::middleware('wechat')->group(function() {
@@ -56,11 +66,6 @@ Route::middleware('wechat')->group(function() {
      * 发布转让产品
      */
     Route::post('release_product', 'Community\ProductController@release_product');
-
-    /**
-     * 产品列表
-     */
-    Route::get('product', 'Community\ProductController@product');
 
     /**
      * 产品详情
