@@ -20,7 +20,7 @@ class GoUser extends RowAction
 
             \App\User::create(['nickname'=>'管理员','avatar'=>env('APP_URL').'/vendor/laravel-admin/AdminLTE/dist/img/user2-160x160.jpg']);
 
-            $id = \App\User::where('nickname','管理员')->where('openid','')->value('id');
+            $id = \App\User::where('nickname','管理员')->value('id');
 
         } 
 
