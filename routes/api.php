@@ -58,6 +58,11 @@ Route::middleware('wechat')->group(function() {
     Route::get('user', 'Community\UserController@user');
 
     /**
+     * 我的发布
+     */
+    Route::get('user_pro', 'Community\UserController@user_pro');
+
+    /**
      * 获取手机号
      */
     Route::post('user_phone', 'AuthController@user_phone');
