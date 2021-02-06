@@ -98,6 +98,8 @@ class ProductController extends Controller
 
             $data['nickname'] = $data->users->nickname;
 
+            $data['end_time'] = date('Y-m-d',$data['end_time']);
+
             return result($data);
 
         } catch (\Throwable $th) {
