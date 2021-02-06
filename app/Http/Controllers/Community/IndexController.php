@@ -95,6 +95,22 @@ class IndexController extends Controller
     }
 
     /**
+     * 产品筛选
+     */
+    public function product_like(Request $request)
+    {
+        try {
+            
+            
+
+        } catch (\Throwable $th) {
+
+            return error();
+
+        }
+    }
+
+    /**
      * 自增浏览次数
      */
     public function line(Request $request)

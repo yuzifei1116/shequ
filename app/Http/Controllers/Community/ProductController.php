@@ -29,6 +29,8 @@ class ProductController extends Controller
 
             if(!$request->suv_day) return error('请填写剩余天数'); else $data['suv_day'] = $request->suv_day;
 
+            if(!$request->cate_id) return error('请选择分类'); else $data['cate_id'] = $request->cate_id;
+
             if($request->remark) $data['remark'] = $request->remark;
             
             $data['phone'] = phone();
@@ -75,6 +77,8 @@ class ProductController extends Controller
             if(!$request->id) return error('请选择产品');
 
             $data = \App\Product::where('id',$request->id)->first();
+
+            $data['nickname'] = $data->users->nickname;
 
             return result($data);
 

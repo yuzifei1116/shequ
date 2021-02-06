@@ -31,6 +31,7 @@ class ProductController extends AdminController
 
         $grid->column('id', __('索引'));
         $grid->column('name', __('产品名称'));
+        $grid->column('cate.title', __('产品分类'));
         $grid->column('rate_cate', __('收益分配方式'))->using(['1'=>'季度','2'=>'半年','3'=>'年度']);
         $grid->column('annualized', __('预计年化'))->help('单位：%');
         $grid->column('turn_money', __('金额'))->help('单位：万')->label('info');
@@ -59,12 +60,10 @@ class ProductController extends AdminController
         $grid->disableCreateButton();
 
         $grid->actions(function ($actions) {
-
-            // 去掉删除
-            $actions->disableDelete();
         
-            // 去掉查看
-            $actions->disableView();
+            // 去掉编辑
+            $actions->disableEdit();
+
         });
 
         return $grid;
@@ -82,6 +81,7 @@ class ProductController extends AdminController
 
         $show->field('id', __('索引'));
         $show->field('name', __('产品名称'));
+        $show->field('cate.title', __('产品分类'));
         $show->field('rate_cate', __('收益分配方式'))->using(['1'=>'季度','2'=>'半年','3'=>'年度']);
         $show->field('annualized', __('预计年化 单位：%'));
         $show->field('turn_money', __('金额 单位：万'));
@@ -91,7 +91,7 @@ class ProductController extends AdminController
         $show->field('phone', __('联系电话'));
         $show->field('is_show', __('审核状态'))->using(['0'=>'待审核','1'=>'通过']);
         $show->field('server', __('产品类型'))->using(['1'=>'转让','2'=>'求购']);
-        $show->field('user_id', __('用户'));
+        $show->field('users.nickname', __('用户'));
         $show->field('browse_count', __('浏览次数'));
         $show->field('created_at', __('添加时间'));
 
@@ -108,6 +108,7 @@ class ProductController extends AdminController
         $form = new Form(new Product());
 
         $form->text('name', __('产品名称'));
+        $form->text('cate.title', __('产品分类'));
         $form->number('rate_cate', __('收益分配方式'));
         $form->number('annualized', __('预计年化 单位：%'));
         $form->number('turn_money', __('金额 单位：万'));
