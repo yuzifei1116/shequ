@@ -16,7 +16,7 @@ class ActivityController extends Controller
             
             if(!$request->id){
 
-                $id = \App\ActivityCate::where('htm_id',2)->value(id);
+                $id = \App\ActivityCate::where('htm_id',2)->value('id');
 
                 $data = \App\Activity::where('cate_id',$id)->get();;
 
