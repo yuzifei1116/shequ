@@ -77,6 +77,8 @@ class ActivityController extends Controller
             if($data['speak']){
 
                 foreach($data['speak'] as $k=>&$v){
+
+                    $v->created_at = $v->created_at->format('Y-m-d');
                     
                     $v['user'] = $v->users->nickname;
 
@@ -91,6 +93,8 @@ class ActivityController extends Controller
                     if($v['user_speak']){
 
                         foreach($v['user_speak'] as $key=>&$value){
+
+                            $value->created_at = $value->created_at->format('Y-m-d');
 
                             $value['user'] = $value->users->nickname;
     
