@@ -104,7 +104,7 @@ class IndexController extends Controller
 
             switch ($request->cate) {
                 case '1':
-                    $model = where('name','like','%'.$request->name.'%');
+                    $model->where('name','like','%'.$request->name.'%');
                     break;
 
                 case '2':
