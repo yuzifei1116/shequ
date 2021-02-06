@@ -78,6 +78,24 @@ class ProductController extends Controller
 
             $data = \App\Product::where('id',$request->id)->first();
 
+            switch ($data['rate_cate']) {
+                case '1':
+                    $data['rate_cate'] = '季度';
+                    break;
+
+                case '2':
+                    $data['rate_cate'] = '半年';
+                    break;
+
+                case '3':
+                    $data['rate_cate'] = '年度';
+                    break;
+                
+                default:
+                    # code...
+                    break;
+            }
+
             $data['nickname'] = $data->users->nickname;
 
             return result($data);
