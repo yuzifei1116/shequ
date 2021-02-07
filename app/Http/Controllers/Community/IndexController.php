@@ -74,7 +74,7 @@ class IndexController extends Controller
                             break;
         
                         case '3':
-                            $v['cate_name'] = '工商企业类';
+                            $v['cate_name'] = '工商类';
                             break;
     
                         case '4':
@@ -252,7 +252,7 @@ class IndexController extends Controller
                             break;
         
                         case '3':
-                            $v['cate_name'] = '工商企业类';
+                            $v['cate_name'] = '工商类';
                             break;
     
                         case '4':
