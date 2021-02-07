@@ -156,6 +156,31 @@ class IndexController extends Controller
 
             $data = $model->get();
 
+            if($data){
+
+                foreach($data as $k=>&$v){
+                    $v['end_time'] = date('Y-m-d',$v['end_time']);
+                    switch ($v['rate_cate']) {
+                        case '1':
+                            $v['rate_cate'] = '季度';
+                            break;
+
+                        case '2':
+                            $v['rate_cate'] = '半年';
+                            break;
+
+                        case '3':
+                            $v['rate_cate'] = '年度';
+                            break;
+                        
+                        default:
+                            # code...
+                            break;
+                    }
+                }
+
+            }
+
             return \result($data);
 
         } catch (\Throwable $th) {
