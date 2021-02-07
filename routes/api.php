@@ -83,6 +83,11 @@ Route::middleware('wechat')->group(function() {
     Route::get('productFirst', 'Community\ProductController@productFirst');
 
     /**
+     * 产品发布
+     */
+    Route::get('proCreate', 'Community\ProductController@proCreate');
+
+    /**
      * 文章详情
      */
     Route::get('actFirst', 'Community\ActivityController@actFirst');
