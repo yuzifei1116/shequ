@@ -32,6 +32,8 @@ class ProductController extends Controller
             if(!$request->cate_id) return error('请选择分类'); else $data['cate_id'] = $request->cate_id;
 
             if($request->remark) $data['remark'] = $request->remark;
+
+            if($request->server) $data['server'] = $request->server;
             
             $data['phone'] = phone();
             
