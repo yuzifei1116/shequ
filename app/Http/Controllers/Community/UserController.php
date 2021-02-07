@@ -48,7 +48,7 @@ class UserController extends Controller
 
             $page   = $page * $limit;
 
-            $data = \App\Product::where('user_id',$request->user->id)->where('server',1)->offset($page)->limit($limit)->get();
+            $data = \App\Product::where('user_id',$request->user->id)->where('server',1)->orderBy('id','desc')->offset($page)->limit($limit)->get();
 
             if($data){
 
