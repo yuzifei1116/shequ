@@ -35,7 +35,7 @@ class ProductController extends AdminController
         $grid->column('rate_cate', __('收益分配方式'))->using(['1'=>'季度','2'=>'半年','3'=>'年度']);
         $grid->column('annualized', __('预计年化'))->help('单位：%');
         $grid->column('turn_money', __('金额'))->help('单位：万')->label('info');
-        $grid->column('end_time', __('预计到期日期'))->display(function ($title) {
+        $grid->column('end_time', __('合同到期日期'))->display(function ($title) {
 
             return date('Y-m-d',$title);
         
