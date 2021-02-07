@@ -56,11 +56,11 @@ class ProductController extends Controller
         try {
             
             //发布产品列表
-            $data['fa_product'] = \App\Product::where('is_site',0)->where('is_show',1)->where('server',1)->orderBy('id','desc')->get();
+            $data = \App\Product::where('is_site',0)->where('is_show',1)->where('server',1)->orderBy('id','desc')->get();
 
-            if($data['fa_product']){
+            if($data){
 
-                foreach($data['fa_product'] as $k=>&$v){
+                foreach($data as $k=>&$v){
 
                     switch ($v['cate_id']) {
                         case '1':
@@ -91,7 +91,7 @@ class ProductController extends Controller
 
             }
 
-            return result($data['fa_product']);
+            return result($data);
 
         } catch (\Throwable $th) {
             
