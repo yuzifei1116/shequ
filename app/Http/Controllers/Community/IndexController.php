@@ -64,6 +64,31 @@ class IndexController extends Controller
                             # code...
                             break;
                     }
+                    switch ($v['cate_id']) {
+                        case '1':
+                            $v['cate_name'] = '征信类';
+                            break;
+        
+                        case '2':
+                            $v['cate_name'] = '地产类';
+                            break;
+        
+                        case '3':
+                            $v['cate_name'] = '工商企业类';
+                            break;
+    
+                        case '4':
+                            $v['cate_name'] = '资金池类';
+                            break;
+                        
+                        case '5':
+                            $v['cate_name'] = '逾期类';
+                            break;
+                        
+                        default:
+                            # code...
+                            break;
+                    }
                 }
 
             }
