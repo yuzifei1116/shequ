@@ -26,23 +26,39 @@ class ActivityController extends Controller
                 }
 
             }
+
+            $limit = $request->limit ? $request->limit : 6; 
+
+            $page  = $request->page ? $request->page - 1 : 0;
+
+            if(!is_numeric($page)){
+                return response()->json(['error'=>['message' => '参数错误!']]); 
+            }
+
+            $page   = $page < 0 ? 0 : $page ;
+
+            $page   = $page * $limit;
             
             if(!$request->id){
 
                 $id = \App\ActivityCate::where('htm_id',2)->value('id');
 
-                $data['act'] = \App\Activity::where('cate_id',$id)->get();;
+                $data['act'] = \App\Activity::where('cate_id',$id)->offset($page)->limit($limit)->get();;
 
             }else{
 
-                $data['act'] = \App\Activity::where('cate_id',$request->id)->get();
+                $data['act'] = \App\Activity::where('cate_id',$request->id)->offset($page)->limit($limit)->get();
 
             }
 
-            foreach($data['act'] as $k=>&$v){
+            if($data['act']){
 
-                $v['img'] = env('APP_URL').'storage/'.$v['img'];
+                foreach($data['act'] as $k=>&$v){
 
+                    $v['img'] = env('APP_URL').'storage/'.$v['img'];
+    
+                }
+                
             }
 
             return result($data);
