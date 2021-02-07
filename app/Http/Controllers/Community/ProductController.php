@@ -66,7 +66,7 @@ class ProductController extends Controller
 
                     switch ($v['cate_id']) {
                         case '1':
-                            $v['cate_name'] = '征信类';
+                            $v['cate_name'] = '政信类';
                             break;
         
                         case '2':
