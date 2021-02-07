@@ -69,7 +69,7 @@ class IndexController extends Controller
             }
 
             //底部文章分类
-            $data['cate'] = \App\ActivityCate::select('name')->limit(3)->where('htm_id',1)->get();
+            $data['cate'] = \App\ActivityCate::select('id','name')->limit(3)->where('htm_id',1)->get();
 
             return result($data); 
             
