@@ -106,7 +106,7 @@ class IndexController extends Controller
                 case '1':
                     $model->where('name','like','%'.$request->name.'%');
 
-                    if($request->a && $request->a == '0'){
+                    if($request->a == '0'){
 
                     }elseif ($request->a && $request->a == '1') {
                         $model->orderBy('turn_money','asc');
@@ -118,7 +118,7 @@ class IndexController extends Controller
                         $model->orderBy('end_time','desc');
                     }
 
-                    if($request->b && $request->b == '0'){
+                    if($request->b == '0'){
                         $model->where('cate_id',1);
                     }elseif ($request->b && $request->b == '1') {
                         $model->where('cate_id',2);
@@ -130,13 +130,13 @@ class IndexController extends Controller
                         $model->where('cate_id',5);
                     }
 
-                    if($request->c && $request->c == '0'){
+                    if($request->c == '0'){
                         $model->where('turn_money','>',300);
                     }elseif ($request->c && $request->c == '1') {
                         $model->where('turn_money','<=',300);
                     }
 
-                    if($request->d && $request->d == '0'){
+                    if($request->d == '0'){
                         
                     }elseif ($request->d && $request->d == '1') {
                         $model->where('suv_day','<',90);
@@ -148,7 +148,7 @@ class IndexController extends Controller
                     break;
 
                 case '2':
-                    if($request->a && $request->a == '0'){
+                    if($request->a == '0'){
 
                     }elseif ($request->a && $request->a == '1') {
                         $model->orderBy('turn_money','asc');
@@ -160,7 +160,7 @@ class IndexController extends Controller
                         $model->orderBy('end_time','desc');
                     }
 
-                    if($request->b && $request->b == '0'){
+                    if($request->b == '0'){
                         $model->where('cate_id',1);
                     }elseif ($request->b && $request->b == '1') {
                         $model->where('cate_id',2);
@@ -172,13 +172,13 @@ class IndexController extends Controller
                         $model->where('cate_id',5);
                     }
 
-                    if($request->c && $request->c == '0'){
+                    if($request->c == '0'){
                         $model->where('turn_money','>',300);
                     }elseif ($request->c && $request->c == '1') {
                         $model->where('turn_money','<=',300);
                     }
 
-                    if($request->d && $request->d == '0'){
+                    if($request->d == '0'){
                         
                     }elseif ($request->d && $request->d == '1') {
                         $model->where('suv_day','<',90);
