@@ -19,6 +19,8 @@ class UserController extends Controller
             $user->phone = phone();
 
             $user->content = \App\Setting::value('content');
+
+            $user->trade = \App\Setting::value('trade');
             
             return result($user);
 
