@@ -105,6 +105,46 @@ class IndexController extends Controller
             switch ($request->cate) {
                 case '1':
                     $model->where('name','like','%'.$request->name.'%');
+
+                    if($request->a && $request->a == '0'){
+
+                    }elseif ($request->a && $request->a == '1') {
+                        $model->orderBy('turn_money','asc');
+                    }elseif ($request->a && $request->a == '2') {
+                        $model->orderBy('turn_money','desc');
+                    }elseif ($request->a && $request->a == '3') {
+                        $model->orderBy('end_time','asc');
+                    }elseif ($request->a && $request->a == '4') {
+                        $model->orderBy('end_time','desc');
+                    }
+
+                    if($request->b && $request->b == '0'){
+                        $model->where('cate_id',1);
+                    }elseif ($request->b && $request->b == '1') {
+                        $model->where('cate_id',2);
+                    }elseif ($request->b && $request->b == '2') {
+                        $model->where('cate_id',3);
+                    }elseif ($request->b && $request->b == '3') {
+                        $model->where('cate_id',4);
+                    }elseif ($request->b && $request->b == '4') {
+                        $model->where('cate_id',5);
+                    }
+
+                    if($request->c && $request->c == '0'){
+                        $model->where('turn_money','>',300);
+                    }elseif ($request->c && $request->c == '1') {
+                        $model->where('turn_money','<=',300);
+                    }
+
+                    if($request->d && $request->d == '0'){
+                        
+                    }elseif ($request->d && $request->d == '1') {
+                        $model->where('suv_day','<',90);
+                    }elseif ($request->d && $request->d == '2') {
+                        $model->whereBetween('suv_day',[91,185]);
+                    }elseif ($request->d && $request->d == '3') {
+                        $model->where('suv_day','>',185);
+                    }
                     break;
 
                 case '2':
