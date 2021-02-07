@@ -133,6 +133,8 @@ class ProductController extends Controller
 
             $data['end_time'] = date('Y-m-d',$data['end_time']);
 
+            if($data['remark'] == '') $data['remark'] = '暂无'; 
+
             $res = \App\With::where('user_id',$request->user->id)->where('activity_id',$request->id)->where('cate',1)->count() ?? 0;
 
             if($res == 0){
