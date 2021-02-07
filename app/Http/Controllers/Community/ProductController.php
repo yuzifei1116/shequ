@@ -33,7 +33,7 @@ class ProductController extends Controller
 
             if($request->remark) $data['remark'] = $request->remark;
 
-            if($request->server) $data['server'] = $request->server;
+            if($request->get('server')) $data['server'] = $request->get('server');
             
             $data['phone'] = phone();
             
