@@ -41,7 +41,7 @@ class IndexController extends Controller
             }
 
             //最新转让信息
-            $data['new_turn'] = \App\Product::where('is_site',0)->where('is_show',1)->where('server',1)->orderby('id','desc')->limit(10)->get();
+            $data['new_turn'] = \App\Product::where('is_site',0)->where('is_show',1)->where('server',1)->orderby('id','desc')->limit(4)->get();
 
             if($data['new_turn']){
 

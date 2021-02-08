@@ -41,7 +41,7 @@ class ProductController extends AdminController
         
         });
         $grid->column('suv_day', __('剩余天数'));
-        $grid->column('remark', __('补充内容'));
+        $grid->column('remark', __('产品介绍'));
         $grid->column('is_site', __('是否交易'))->switch([
             'on'=>['value' => 1, 'text' => '是', 'color' => 'success'],
             'off' => ['value' => 0, 'text' => '否', 'color' => 'danger']
