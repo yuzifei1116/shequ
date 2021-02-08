@@ -16,8 +16,8 @@ class AuthController extends Controller
     public function __construct()
     {
         $wechat_config = [
-            'app_id'    => 'wx7afc86358515720f',
-            'secret'    => '1075b77af7c6e2ba59de5b27202ca818'
+            'app_id'    => 'wx673213a4ff469751',
+            'secret'    => 'ff6841722f8706716089b1168819e96e'
         ];
 
         $this->app = Factory::miniProgram($wechat_config);
