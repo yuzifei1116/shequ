@@ -199,7 +199,8 @@ class ActivityController extends Controller
 
         } catch (\Throwable $th) {
             
-            return error();
+            // return error();
+            return $th->getMessage();
 
         }
     }

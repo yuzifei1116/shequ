@@ -85,46 +85,76 @@ class ProductController extends Controller
         try {
             
             if(!$request->type) return \error('请选择类别');
-            
-            $data = \App\Product::where('is_site',0)->where('is_show',1)->where('suv_day','<>',0)->where('server',1)->orderBy('id','desc')->where('cate_id',$request->type)->get();
 
-            try {
-                
-                foreach($data as $k=>&$v){
+            if(!$request->c){
+                $data = \App\Product::where('is_site',0)->where('is_show',1)->where('suv_day','<>',0)->where('server',1)->orderBy('id','desc')->where('cate_id',$request->type)->get();
+
+                try {
                     
-                    switch ($v['cate_id']) {
-                        case '1':
-                            $v['cate_name'] = '政信类';
-                            break;
+                    foreach($data as $k=>&$v){
+                        
+                        switch ($v['cate_id']) {
+                            case '1':
+                                $v['cate_name'] = '政信类';
+                                break;
+            
+                            case '2':
+                                $v['cate_name'] = '地产类';
+                                break;
+            
+                            case '3':
+                                $v['cate_name'] = '工商类';
+                                break;
         
-                        case '2':
-                            $v['cate_name'] = '地产类';
-                            break;
+                            case '4':
+                                $v['cate_name'] = '资金池类';
+                                break;
+                            
+                            case '5':
+                                $v['cate_name'] = '逾期类';
+                                break;
+                            
+                            default:
+                                # code...
+                                break;
+                        }
+
+                    }
+                } catch (\Throwable $th) {
+                
+                    return \result($data);
         
-                        case '3':
-                            $v['cate_name'] = '工商类';
-                            break;
+                }
+            }else{
+
+                $limit = $request->limit ? $request->limit : 6; 
+
+                $page  = $request->page ? $request->page - 1 : 0;
+
+                if(!is_numeric($page)){
+                    return response()->json(['error'=>['message' => '参数错误!']]); 
+                }
+
+                $page   = $page < 0 ? 0 : $page ;
+
+                $page   = $page * $limit;
+
+                $data = \App\Activity::where('cate_id',$request->type)->offset($page)->limit($limit)->get();
+
+                if($data){
+
+                    foreach($data as $k=>&$v){
     
-                        case '4':
-                            $v['cate_name'] = '资金池类';
-                            break;
-                        
-                        case '5':
-                            $v['cate_name'] = '逾期类';
-                            break;
-                        
-                        default:
-                            # code...
-                            break;
+                        $v['img'] = env('APP_URL').'storage/'.$v['img'];
+    
                     }
 
                 }
 
-            } catch (\Throwable $th) {
-                
                 return \result($data);
 
             }
+            
 
             return \result($data);
 
