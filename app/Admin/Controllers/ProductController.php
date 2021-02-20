@@ -35,11 +35,8 @@ class ProductController extends AdminController
         $grid->column('rate_cate', __('收益分配方式'))->using(['1'=>'季度','2'=>'半年','3'=>'年度']);
         $grid->column('annualized', __('预计年化'))->help('单位：%');
         $grid->column('turn_money', __('金额'))->help('单位：万')->label('info');
-        $grid->column('end_time', __('合同到期日期'))->display(function ($title) {
-
-            return date('Y-m-d',$title);
-        
-        });
+        $grid->column('de_money', __('贴息金额'))->help('单位：万');
+        $grid->column('end_time', __('合同到期日期'));
         $grid->column('suv_day', __('剩余天数'));
         $grid->column('remark', __('产品介绍'));
         $grid->column('is_site', __('是否交易'))->switch([
@@ -48,6 +45,7 @@ class ProductController extends AdminController
         ]);
         $grid->column('phone', __('联系电话'));
         $grid->column('is_show', __('审核状态'))->using(['0'=>'待审核','1'=>'通过','2'=>'拒绝'])->dot([ 1 => 'success', 0 => 'danger','2'=>'info' ], 'default');
+        $grid->column('reason', __('拒绝原因'));
         $grid->column('server', __('产品类型'))->using(['1'=>'转让','2'=>'求购']);
         $grid->column('users.nickname', __('用户'));
         $grid->column('browse_count', __('浏览次数'));
@@ -85,11 +83,13 @@ class ProductController extends AdminController
         $show->field('rate_cate', __('收益分配方式'))->using(['1'=>'季度','2'=>'半年','3'=>'年度']);
         $show->field('annualized', __('预计年化 单位：%'));
         $show->field('turn_money', __('金额 单位：万'));
+        $show->field('de_money', __('金额 单位：万'));
         $show->field('suv_day', __('剩余天数'));
-        $show->field('remark', __('补充内容'));
+        $show->field('remark', __('产品信息'));
         $show->field('is_site', __('是否交易完成'))->using(['0'=>'否','1'=>'是']);
         $show->field('phone', __('联系电话'));
-        $show->field('is_show', __('审核状态'))->using(['0'=>'待审核','1'=>'通过']);
+        $show->field('is_show', __('审核状态'))->using(['0'=>'待审核','1'=>'通过','2'=>'拒绝']);
+        $show->field('reason', __('拒绝原因'));
         $show->field('server', __('产品类型'))->using(['1'=>'转让','2'=>'求购']);
         $show->field('users.nickname', __('用户'));
         $show->field('browse_count', __('浏览次数'));
@@ -112,9 +112,10 @@ class ProductController extends AdminController
         $form->number('rate_cate', __('收益分配方式'));
         $form->number('annualized', __('预计年化 单位：%'));
         $form->number('turn_money', __('金额 单位：万'));
+        $form->number('de_money', __('贴息金额 单位：万'));
         $form->text('end_time', __('预计到期日期'));
         $form->number('suv_day', __('剩余天数'));
-        $form->text('remark', __('补充内容'));
+        $form->text('remark', __('产品信息'));
         $form->switch('is_site', __('是否交易完成'))->states([
             'on'=>['value' => 1, 'text' => '是', 'color' => 'success'],
             'off' => ['value' => 0, 'text' => '否', 'color' => 'danger']

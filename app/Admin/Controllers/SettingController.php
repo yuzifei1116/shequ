@@ -30,6 +30,7 @@ class SettingController extends AdminController
         $grid->column('phone', __('联系电话'));
         $grid->column('content', __('关于'));
         $grid->column('trade', __('交易流程'));
+        $grid->column('return_content', __('转让问答'));
 
         if(Setting::first()){
 
@@ -54,6 +55,7 @@ class SettingController extends AdminController
         $show->field('phone', __('联系电话'));
         $show->field('content', __('内容'));
         $show->field('trade', __('交易流程'));
+        $show->field('return_content', __('转让问答'));
 
         return $show;
     }
@@ -70,6 +72,7 @@ class SettingController extends AdminController
         $form->mobile('phone', __('联系电话'))->required();
         $form->ueditor('content', __('关于'))->required();
         $form->ueditor('trade', __('交易流程'))->required();
+        $form->ueditor('return_content', __('转让问答'))->required();
 
         return $form;
     }

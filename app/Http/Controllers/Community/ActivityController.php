@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Community;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Storage;
 
 class ActivityController extends Controller
 {
@@ -27,7 +28,7 @@ class ActivityController extends Controller
 
             }
 
-            $limit = $request->limit ? $request->limit : 6; 
+            $limit = $request->limit ? $request->limit : 10; 
 
             $page  = $request->page ? $request->page - 1 : 0;
 
@@ -38,27 +39,29 @@ class ActivityController extends Controller
             $page   = $page < 0 ? 0 : $page ;
 
             $page   = $page * $limit;
-            
-            if(!$request->id){
 
-                $id = \App\ActivityCate::where('htm_id',2)->value('id');
+            $data['cate'] = \App\ActivityCate::where('htm_id',2)->get();
 
-                $data['act'] = \App\Activity::where('cate_id',$id)->offset($page)->limit($limit)->get();;
+            foreach($data['cate'] as $k=>&$v){
 
-            }else{
-
-                $data['act'] = \App\Activity::where('cate_id',$request->id)->offset($page)->limit($limit)->get();
+                $v['img'] = env('APP_URL').'storage/'.$v['img'];
 
             }
+
+            $data['act'] = \App\UserAct::where('is_show',1)->offset($page)->limit($limit)->get();
 
             if($data['act']){
 
                 foreach($data['act'] as $k=>&$v){
 
+                    $v['nickname'] = \App\User::where('id',$v['user_id'])->value('nickname');
+
+                    $v['avatar'] = \App\User::where('id',$v['user_id'])->value('avatar');
+
                     $v['img'] = env('APP_URL').'storage/'.$v['img'];
-    
+
                 }
-                
+
             }
 
             return result($data);
@@ -66,6 +69,70 @@ class ActivityController extends Controller
         } catch (\Throwable $th) {
             
             return error();
+
+        }
+    }
+
+    /**
+     *  上传图片
+     */
+    public function test(Request $request)
+    {
+        try {
+            $file = $_FILES;
+
+            $a = Storage::putFile('public', $request->file('img'));
+
+            dd($a);
+
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
+    }
+
+    /**
+     * 发布动态
+     */
+    public function pushComment(Request $request)
+    {
+        try {
+            
+            if(!$request->title) return error('请填写动态');
+
+            $file = $request->file('img');
+            dd($_FILES);
+            if($file){
+
+                $a = Storage::putFile('public', $request->file('img'));
+
+                $push = new \App\UserAct;
+
+                $push->title = $request->title;
+
+                $push->user_id = $request->user->id;
+
+                $push->img = 'images/'.$name;
+
+                $push->save();
+
+            }else{
+
+                $push = new \App\UserAct;
+
+                $push->title = $request->title;
+                
+                $push->user_id = $request->user->id;
+
+                $push->save();
+
+            }
+
+            return result('发布成功,请等待审核');
+
+        } catch (\Throwable $th) {
+            
+            // return error();
+            return $th->getMessage();
 
         }
     }

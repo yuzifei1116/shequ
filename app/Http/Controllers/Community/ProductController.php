@@ -25,15 +25,19 @@ class ProductController extends Controller
 
             if(!$request->turn_money) return error('请填写金额'); else $data['turn_money'] = $request->turn_money;
 
-            if(!$request->end_time) return error('请填写预计到期日期'); else $data['end_time'] = strtotime($request->end_time);
+            if(!$request->de_money) return error('请填写贴息金额'); else $data['de_money'] = $request->de_money;
 
-            if(!$request->suv_day) return error('请填写剩余天数'); else $data['suv_day'] = $request->suv_day;
+            if(!$request->end_time) return error('请填写预计到期日期'); else $data['end_time'] = $request->end_time;
+
+            // if(!$request->suv_day) return error('请填写剩余天数'); else $data['suv_day'] = $request->suv_day;
 
             if(!$request->cate_id) return error('请选择分类'); else $data['cate_id'] = $request->cate_id;
-
+            
             if($request->remark) $data['remark'] = $request->remark;
 
             if($request->get('server')) $data['server'] = $request->get('server');
+
+            $data['suv_day'] = $this->diffBetweenTwoDays(time(),$data['end_time']);
             
             $data['phone'] = phone();
             
@@ -51,6 +55,87 @@ class ProductController extends Controller
     }
 
     /**
+     * 求两个日期之间相差的天数
+     * (针对1970年1月1日之后，求之前可以采用泰勒公式)
+     * @param string $day1
+     * @param string $day2
+     * @return number
+     */
+    public function diffBetweenTwoDays ($day1, $day2)
+    {
+
+        $second1 = $day1;
+        $second2 = strtotime($day2);
+            
+        if ($second1 < $second2) {
+            $tmp = $second2;
+            $second2 = $second1;
+            $second1 = $tmp;
+        }
+        
+        return ($second1 - $second2) / 86400;
+
+    }
+
+    /**
+     * 类别对应产品列表
+     */
+    public function type_product(Request $request)
+    {
+        try {
+            
+            if(!$request->type) return \error('请选择类别');
+            
+            $data = \App\Product::where('is_site',0)->where('is_show',1)->where('suv_day','<>',0)->where('server',1)->orderBy('id','desc')->where('cate_id',$request->type)->get();
+
+            try {
+                
+                foreach($data as $k=>&$v){
+                    
+                    switch ($v['cate_id']) {
+                        case '1':
+                            $v['cate_name'] = '政信类';
+                            break;
+        
+                        case '2':
+                            $v['cate_name'] = '地产类';
+                            break;
+        
+                        case '3':
+                            $v['cate_name'] = '工商类';
+                            break;
+    
+                        case '4':
+                            $v['cate_name'] = '资金池类';
+                            break;
+                        
+                        case '5':
+                            $v['cate_name'] = '逾期类';
+                            break;
+                        
+                        default:
+                            # code...
+                            break;
+                    }
+
+                }
+
+            } catch (\Throwable $th) {
+                
+                return \result($data);
+
+            }
+
+            return \result($data);
+
+        } catch (\Throwable $th) {
+
+            return error();
+
+        }
+    }
+
+    /**
      * 产品列表
      */
     public function product(Request $request)
@@ -58,7 +143,7 @@ class ProductController extends Controller
         try {
             
             //发布产品列表
-            $data = \App\Product::where('is_site',0)->where('is_show',1)->where('server',1)->orderBy('id','desc')->get();
+            $data = \App\Product::where('is_site',0)->where('is_show',1)->where('suv_day','<>',0)->where('server',1)->orderBy('id','desc')->get();
 
             if($data){
 
@@ -133,7 +218,7 @@ class ProductController extends Controller
 
             $data['nickname'] = $data->users->nickname;
 
-            $data['end_time'] = date('Y-m-d',$data['end_time']);
+            // $data['end_time'] = date('Y-m-d',$data['end_time']);
 
             if($data['remark'] == '') $data['remark'] = '暂无'; 
 

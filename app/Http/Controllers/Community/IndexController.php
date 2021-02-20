@@ -30,7 +30,7 @@ class IndexController extends Controller
 
                 foreach($data['new_dynamic'] as $k=>&$v){
 
-                    if($v['server'] == 1) $v['content'] = '[产品转让]'.$v['name'] ?? '[产品求购]'.$v['name'];
+                    if($v['server'] == 1) $v['content'] = '[产品转让]' ?? '[产品求购]';
 
                     unset($v['name']);
 
@@ -41,7 +41,7 @@ class IndexController extends Controller
             }
 
             //最新转让信息
-            $data['new_turn'] = \App\Product::where('is_site',0)->where('is_show',1)->where('server',1)->orderby('id','desc')->limit(4)->get();
+            $data['new_turn'] = \App\Product::where('is_site',0)->where('is_show',1)->where('suv_day','<>',0)->where('server',1)->orderby('id','desc')->limit(4)->get();
 
             if($data['new_turn']){
 
@@ -125,7 +125,7 @@ class IndexController extends Controller
 
             $page   = $page * $limit;
 
-            $model = \App\Product::where('is_site',0)->where('is_show',1)->where('server',1)->offset($page)->limit($limit);
+            $model = \App\Product::where('is_site',0)->where('is_show',1)->where('suv_day','<>',0)->where('server',1)->offset($page)->limit($limit);
 
             switch ($request->cate) {
                 case '1':
@@ -153,12 +153,16 @@ class IndexController extends Controller
                         $model->where('cate_id',4);
                     }elseif ($request->b && $request->b == '4') {
                         $model->where('cate_id',5);
+                    }elseif ($request->b && $request->b == '5') {
+                        
                     }
 
                     if($request->c == '0'){
                         $model->where('turn_money','>',300);
                     }elseif ($request->c && $request->c == '1') {
                         $model->where('turn_money','<=',300);
+                    }elseif ($request->c && $request->c == '2') {
+                        
                     }
 
                     if($request->d == '0'){
@@ -195,12 +199,16 @@ class IndexController extends Controller
                         $model->where('cate_id',4);
                     }elseif ($request->b && $request->b == '4') {
                         $model->where('cate_id',5);
+                    }elseif ($request->b && $request->b == '5') {
+                        
                     }
 
                     if($request->c == '0'){
                         $model->where('turn_money','>',300);
                     }elseif ($request->c && $request->c == '1') {
                         $model->where('turn_money','<=',300);
+                    }elseif ($request->c && $request->c == '2') {
+                        
                     }
 
                     if($request->d == '0'){

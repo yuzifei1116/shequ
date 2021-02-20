@@ -18,6 +18,11 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 /**
+ * 定时任务--产品剩余天数递减
+ */
+Route::get('dayInc', 'Community\TaskController@dayInc');
+
+/**
  * code 兑换 session_key 和 open_id-解密获取用户信息
  */
 Route::post('auth/code', 'AuthController@code');
@@ -41,6 +46,11 @@ Route::get('product', 'Community\ProductController@product');
  * 文章列表
  */
 Route::get('actList', 'Community\ActivityController@actList');
+
+/**
+ * 文章列表
+ */
+Route::get('type_product', 'Community\ProductController@type_product');
 
 /**
  * 授权路由
@@ -86,6 +96,11 @@ Route::middleware('wechat')->group(function() {
      * 文章详情
      */
     Route::get('actFirst', 'Community\ActivityController@actFirst');
+
+    /**
+     * 发布动态
+     */
+    Route::any('pushComment', 'Community\ActivityController@pushComment');
 
     /**
      * 社区评论

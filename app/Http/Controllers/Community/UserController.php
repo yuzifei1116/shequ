@@ -21,6 +21,8 @@ class UserController extends Controller
             $user->content = \App\Setting::value('content');
 
             $user->trade = \App\Setting::value('trade');
+
+            $user->return_content = \App\Setting::value('return_content');
             
             return result($user);
 
@@ -50,13 +52,15 @@ class UserController extends Controller
 
             $page   = $page * $limit;
 
-            $data = \App\Product::where('user_id',$request->user->id)->where('server',1)->orderBy('id','desc')->offset($page)->limit($limit)->get();
+            $data = \App\Product::where('user_id',$request->user->id)->orderBy('id','desc')->offset($page)->limit($limit)->get();
 
             if($data){
 
                 foreach($data as $k=>&$v){
 
-                    $v['end_time'] = date('Y-m-d',$v['end_time']);
+                    // $v['end_time'] = date('Y-m-d',$v['end_time']);
+
+                    if($v['server'] == 1) $v['content'] = '转让' ?? '求购';
 
                     switch ($v['rate_cate']) {
                         case '1':

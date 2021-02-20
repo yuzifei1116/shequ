@@ -57,7 +57,7 @@ class AuthController extends Controller
         } catch (\Exception $e) {
             return error('session_key 无效');
         }
-
+        
         if(!isset($data['openId'])) {
             return error('获取 openid 错误');
         }
@@ -92,7 +92,7 @@ class AuthController extends Controller
      */
     public function user_phone(Request $request)
     {
-        $input = $request->post();
+        $input = $request->only('iv', 'encryptedData');
 
         $validator = Validator::make($input, [
             'iv'            => 'required',
@@ -118,29 +118,14 @@ class AuthController extends Controller
         } catch (\Exception $e) {
             return error('session_key 无效');
         }
-
-        if(!isset($data['openId'])) {
-            return error('获取 openid 错误');
-        }
-        dd($data);
-        $model =    User::where('openid', $data['openId'])
-                        ->first();
         
-        $model->nickname    = $data['nickName'];
-        $model->avatar      = $data['avatarUrl'];
-        $model->token       = Str::random(32);
+        $request->user->tel = $data['phoneNumber'];
 
-        if(!$model->save()) {
+        if(!$request->user->save()) {
             return error();
         }
 
-        return  result([
-                    'user' => [
-                        'nickname'  => $model->nickname,
-                        'avatar'    => $model->avatar,
-                    ],
-                    'token' => $model->token,
-                ]);
+        return  result('成功');
     }
 
     /**

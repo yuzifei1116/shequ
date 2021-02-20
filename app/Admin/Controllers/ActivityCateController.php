@@ -29,6 +29,7 @@ class ActivityCateController extends AdminController
         $grid->column('id', __('索引'));
         $grid->column('name', __('分类名称'));
         $grid->column('htm_id', __('所在页面'))->using([1 => '首页', 2 => '社区']);
+        $grid->column('img', __('图片'))->lightbox(['width' => 50, 'height' => 50]);
         $grid->column('created_at', __('添加时间'));
 
         return $grid;
@@ -47,6 +48,7 @@ class ActivityCateController extends AdminController
         $show->field('id', __('索引'));
         $show->field('name', __('分类名称'));
         $show->field('htm_id', __('所在页面'));
+        $show->field('img', __('图片'));
         $show->field('created_at', __('添加时间'));
 
         return $show;
@@ -63,6 +65,7 @@ class ActivityCateController extends AdminController
 
         $form->text('name', __('分类名称'))->required();
         $form->select('htm_id', __('所在页面'))->options([1 => '首页', 2 => '社区'])->required();
+        $form->image('img', __('图片'))->required();
 
         return $form;
     }

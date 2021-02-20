@@ -17,6 +17,8 @@ class Replicate extends RowAction
             return $this->response()->error('该产品已通过，无法修改！')->refresh();
 
         } 
+
+        $model->reason = $request->post('reason');
         
         $model->is_show = 2;
 
@@ -25,9 +27,9 @@ class Replicate extends RowAction
         return $this->response()->success('拒绝成功')->refresh();
     }
 
-    public function dialog()
+    public function form()
     {
-        $this->confirm('确定拒绝？');
+        $this->textarea('reason', '原因')->rules('required');
     }
 
     // 这个方法来根据`star`字段的值来在这一列显示不同的图标
