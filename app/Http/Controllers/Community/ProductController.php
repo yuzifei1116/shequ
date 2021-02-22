@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Community;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
@@ -14,14 +15,14 @@ class ProductController extends Controller
     public function release_product(Request $request)
     {
         try {
-
+            
             $data = array();
 
             if(!$request->name) return error('请填写产品名称'); else $data['name'] = $request->name;
 
             if(!$request->rate_cate) return error('请填写收益分配方式'); else $data['rate_cate'] = $request->rate_cate;
 
-            if(!$request->annualized) return error('请填写预计年化'); else $data['annualized'] = $request->annualized;
+            if(!$request->annualized) return error('请填写合同收益'); else $data['annualized'] = $request->annualized;
 
             if(!$request->turn_money) return error('请填写金额'); else $data['turn_money'] = $request->turn_money;
 
@@ -29,9 +30,17 @@ class ProductController extends Controller
 
             if(!$request->end_time) return error('请填写预计到期日期'); else $data['end_time'] = $request->end_time;
 
-            // if(!$request->suv_day) return error('请填写剩余天数'); else $data['suv_day'] = $request->suv_day;
-
             if(!$request->cate_id) return error('请选择分类'); else $data['cate_id'] = $request->cate_id;
+
+            $file = $request->file('file');
+            
+            if(!$file) return error('请选择图片');
+            
+            $path = Storage::putFile('public/images', $request->file('file'));
+            
+            $path = \substr($path,7);
+            
+            $data['img'] = $path;
             
             if($request->remark) $data['remark'] = $request->remark;
 
@@ -92,6 +101,10 @@ class ProductController extends Controller
                 try {
                     
                     foreach($data as $k=>&$v){
+
+                        if($v['img']){
+                            $v['img'] = env('APP_URL').'storage/'.$v['img'];
+                        }
                         
                         switch ($v['cate_id']) {
                             case '1':
@@ -166,6 +179,59 @@ class ProductController extends Controller
     }
 
     /**
+     * 我的收藏
+     */
+    public function user_withs(Request $request)
+    {
+        try {
+            
+            $data = \App\With::where('user_id',$request->user->id)->where('cate',1)->get();
+
+            if($data){
+                foreach($data as $k=>&$v){
+                    $v['pro'] = \App\Product::where('id',$v['activity_id'])->first();
+                    
+                    if($v['pro']['img']){
+                        $v['pro']['img'] = env('APP_URL').'storage/'.$v['pro']['img'];
+                    }
+                    switch ($v['pro']['cate_id']) {
+                        case '1':
+                            $v['pro']['cate_name'] = '政信类';
+                            break;
+        
+                        case '2':
+                            $v['pro']['cate_name'] = '地产类';
+                            break;
+        
+                        case '3':
+                            $v['pro']['cate_name'] = '工商类';
+                            break;
+    
+                        case '4':
+                            $v['pro']['cate_name'] = '资金池类';
+                            break;
+                        
+                        case '5':
+                            $v['pro']['cate_name'] = '逾期类';
+                            break;
+                        
+                        default:
+                            # code...
+                            break;
+                    }
+                }
+            }
+
+            return result($data);
+            
+        } catch (\Throwable $th) {
+            
+            return error();
+
+        }
+    }
+
+    /**
      * 产品列表
      */
     public function product(Request $request)
@@ -178,6 +244,10 @@ class ProductController extends Controller
             if($data){
 
                 foreach($data as $k=>&$v){
+
+                    if($v['img']){
+                        $v['img'] = env('APP_URL').'storage/'.$v['img'];
+                    }
 
                     switch ($v['cate_id']) {
                         case '1':
@@ -246,9 +316,13 @@ class ProductController extends Controller
                     break;
             }
 
-            $data['nickname'] = $data->users->nickname;
+            if($data['img']){
+                $data['img'] = env('APP_URL').'storage/'.$data['img'];
+            }
 
-            // $data['end_time'] = date('Y-m-d',$data['end_time']);
+            $data['nickname'] = $data->users->nickname ?? '';
+
+            $data['phone'] = phone();
 
             if($data['remark'] == '') $data['remark'] = '暂无'; 
 

@@ -31,9 +31,10 @@ class ProductController extends AdminController
 
         $grid->column('id', __('索引'));
         $grid->column('name', __('产品名称'));
+        $grid->column('img', __('产品图片'))->lightbox(['width' => 50, 'height' => 50]);
         $grid->column('cate_id', __('产品分类'))->using(['1'=>'政信类','2'=>'地产类','3'=>'工商类','4'=>'资金池类','5'=>'逾期类']);
         $grid->column('rate_cate', __('收益分配方式'))->using(['1'=>'季度','2'=>'半年','3'=>'年度']);
-        $grid->column('annualized', __('预计年化'))->help('单位：%');
+        $grid->column('annualized', __('合同收益'))->help('单位：%');
         $grid->column('turn_money', __('金额'))->help('单位：万')->label('info');
         $grid->column('de_money', __('贴息金额'))->help('单位：万');
         $grid->column('end_time', __('合同到期日期'));
@@ -79,9 +80,10 @@ class ProductController extends AdminController
 
         $show->field('id', __('索引'));
         $show->field('name', __('产品名称'));
+        $show->field('img', __('产品图片'))->image();
         $show->field('cate_id', __('产品分类'))->using(['1'=>'政信类','2'=>'地产类','3'=>'工商类','4'=>'资金池类','5'=>'逾期类']);
         $show->field('rate_cate', __('收益分配方式'))->using(['1'=>'季度','2'=>'半年','3'=>'年度']);
-        $show->field('annualized', __('预计年化 单位：%'));
+        $show->field('annualized', __('合同收益 单位：%'));
         $show->field('turn_money', __('金额 单位：万'));
         $show->field('de_money', __('金额 单位：万'));
         $show->field('suv_day', __('剩余天数'));
@@ -110,7 +112,7 @@ class ProductController extends AdminController
         $form->text('name', __('产品名称'));
         $form->text('cate.title', __('产品分类'));
         $form->number('rate_cate', __('收益分配方式'));
-        $form->number('annualized', __('预计年化 单位：%'));
+        $form->number('annualized', __('合同收益 单位：%'));
         $form->number('turn_money', __('金额 单位：万'));
         $form->number('de_money', __('贴息金额 单位：万'));
         $form->text('end_time', __('预计到期日期'));

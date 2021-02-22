@@ -46,7 +46,10 @@ class IndexController extends Controller
             if($data['new_turn']){
 
                 foreach($data['new_turn'] as $k=>&$v){
-                    $v['end_time'] = date('Y-m-d',$v['end_time']);
+                    if($v['img']){
+                        $v['img'] = env('APP_URL').'storage/'.$v['img'];
+                    }
+                    $v['end_time'] = date('Y-m-d',intval($v['end_time']));
                     switch ($v['rate_cate']) {
                         case '1':
                             $v['rate_cate'] = '季度';
@@ -143,25 +146,25 @@ class IndexController extends Controller
                         $model->orderBy('end_time','desc');
                     }
 
-                    if($request->b == '0'){
+                    if($request->b == '1'){
                         $model->where('cate_id',1);
-                    }elseif ($request->b && $request->b == '1') {
-                        $model->where('cate_id',2);
                     }elseif ($request->b && $request->b == '2') {
-                        $model->where('cate_id',3);
+                        $model->where('cate_id',2);
                     }elseif ($request->b && $request->b == '3') {
-                        $model->where('cate_id',4);
+                        $model->where('cate_id',3);
                     }elseif ($request->b && $request->b == '4') {
-                        $model->where('cate_id',5);
+                        $model->where('cate_id',4);
                     }elseif ($request->b && $request->b == '5') {
+                        $model->where('cate_id',5);
+                    }elseif ($request->b == '0') {
                         
                     }
 
-                    if($request->c == '0'){
+                    if($request->c == '1'){
                         $model->where('turn_money','>',300);
-                    }elseif ($request->c && $request->c == '1') {
-                        $model->where('turn_money','<=',300);
                     }elseif ($request->c && $request->c == '2') {
+                        $model->where('turn_money','<=',300);
+                    }elseif ($request->c == '0') {
                         
                     }
 
@@ -189,25 +192,25 @@ class IndexController extends Controller
                         $model->orderBy('end_time','desc');
                     }
 
-                    if($request->b == '0'){
+                    if($request->b == '1'){
                         $model->where('cate_id',1);
-                    }elseif ($request->b && $request->b == '1') {
-                        $model->where('cate_id',2);
                     }elseif ($request->b && $request->b == '2') {
-                        $model->where('cate_id',3);
+                        $model->where('cate_id',2);
                     }elseif ($request->b && $request->b == '3') {
-                        $model->where('cate_id',4);
+                        $model->where('cate_id',3);
                     }elseif ($request->b && $request->b == '4') {
-                        $model->where('cate_id',5);
+                        $model->where('cate_id',4);
                     }elseif ($request->b && $request->b == '5') {
+                        $model->where('cate_id',5);
+                    }elseif ($request->b == '0') {
                         
                     }
 
-                    if($request->c == '0'){
+                    if($request->c == '1'){
                         $model->where('turn_money','>',300);
-                    }elseif ($request->c && $request->c == '1') {
-                        $model->where('turn_money','<=',300);
                     }elseif ($request->c && $request->c == '2') {
+                        $model->where('turn_money','<=',300);
+                    }elseif ($request->c == '0') {
                         
                     }
 
@@ -232,7 +235,10 @@ class IndexController extends Controller
             if($data){
 
                 foreach($data as $k=>&$v){
-                    $v['end_time'] = date('Y-m-d',$v['end_time']);
+                    if($v['img']){
+                        $v['img'] = env('APP_URL').'storage/'.$v['img'];
+                    }
+                    $v['end_time'] = date('Y-m-d',intval($v['end_time']));
                     switch ($v['rate_cate']) {
                         case '1':
                             $v['rate_cate'] = '季度';

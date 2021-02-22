@@ -60,6 +60,10 @@ class UserController extends Controller
 
                     // $v['end_time'] = date('Y-m-d',$v['end_time']);
 
+                    if($v['img']){
+                        $v['img'] = env('APP_URL').'storage/'.$v['img'];
+                    }
+
                     if($v['server'] == 1) $v['content'] = '转让' ?? '求购';
 
                     switch ($v['rate_cate']) {

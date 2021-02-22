@@ -85,12 +85,17 @@ Route::middleware('wechat')->group(function() {
     /**
      * 发布转让产品
      */
-    Route::get('release_product', 'Community\ProductController@release_product');
+    Route::any('release_product', 'Community\ProductController@release_product');
 
     /**
      * 产品详情
      */
     Route::get('productFirst', 'Community\ProductController@productFirst');
+
+    /**
+     * 我的收藏
+     */
+    Route::get('user_withs', 'Community\ProductController@user_withs');
 
     /**
      * 文章详情
@@ -103,7 +108,7 @@ Route::middleware('wechat')->group(function() {
     Route::any('pushComment', 'Community\ActivityController@pushComment');
 
     /**
-     * 社区评论
+     * 社区/动态评论
      */
     Route::get('speak', 'Community\ActivityController@speak');
 

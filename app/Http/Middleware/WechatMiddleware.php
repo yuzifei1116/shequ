@@ -20,7 +20,7 @@ class WechatMiddleware
         
         $user = User::where('token', $token)
                     ->first();
-        
+        // dd($user);
         if(!$user) {
             return error('请登陆', 401);
         }

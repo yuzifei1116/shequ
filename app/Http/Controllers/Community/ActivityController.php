@@ -52,14 +52,53 @@ class ActivityController extends Controller
 
             if($data['act']){
 
-                foreach($data['act'] as $k=>&$v){
+                foreach($data['act'] as $kk=>&$vv){
 
-                    $v['nickname'] = \App\User::where('id',$v['user_id'])->value('nickname');
+                    $vv['nickname'] = \App\User::where('id',$vv['user_id'])->value('nickname');
 
-                    $v['avatar'] = \App\User::where('id',$v['user_id'])->value('avatar');
+                    $vv['avatar'] = \App\User::where('id',$vv['user_id'])->value('avatar');
 
-                    $v['img'] = env('APP_URL').'storage/'.$v['img'];
+                    $vv['img'] = env('APP_URL').'storage/'.$vv['img'];
 
+                    //评论区
+                    $vv['speak'] = \App\ActSpeaks::where('userAct_id',$vv['id'])->where('reply_id',0)->where('comment_id',0)->orderBy('created_at','desc')->where('is_show',1)->get();
+                    
+                    if($vv['speak']){
+
+                        foreach($vv['speak'] as $k=>&$v){
+                            
+                            $v['user'] = $v->users->nickname;
+
+                            $v['user_avatar'] = $v->users->avatar;
+
+                            //顶级
+                            $v['user_speak'] = \App\ActSpeaks::where('userAct_id',$request->id)->where('comment_id',$v->id)->orderBy('created_at','asc')->where('is_show',1)->get();
+                            
+                            unset($v['users']);
+
+                            //副级
+                            if($v['user_speak']){
+
+                                foreach($v['user_speak'] as $key=>&$value){
+
+                                    $value['user'] = $value->users->nickname;
+            
+                                    $value['user_avatar'] = $value->users->avatar;
+            
+                                    $value['reply'] = $value->user_reply->nickname;
+            
+                                    $value['reply_avatar'] = $value->user_reply->avatar;
+
+                                    unset($value['user_reply']);
+
+                                    unset($value['users']);
+            
+                                }
+
+                            }
+                            
+                        }
+                    }
                 }
 
             }
@@ -69,24 +108,8 @@ class ActivityController extends Controller
         } catch (\Throwable $th) {
             
             return error();
+            // return $th->getMessage();
 
-        }
-    }
-
-    /**
-     *  上传图片
-     */
-    public function test(Request $request)
-    {
-        try {
-            $file = $_FILES;
-
-            $a = Storage::putFile('public', $request->file('img'));
-
-            dd($a);
-
-        } catch (\Throwable $th) {
-            //throw $th;
         }
     }
 
@@ -99,19 +122,21 @@ class ActivityController extends Controller
             
             if(!$request->title) return error('请填写动态');
 
-            $file = $request->file('img');
-            dd($_FILES);
+            $file = $request->file('file');
+            
             if($file){
 
-                $a = Storage::putFile('public', $request->file('img'));
-
+                $path = Storage::putFile('public/images', $request->file('file'));
+                
+                $path = \substr($path,7);
+                
                 $push = new \App\UserAct;
 
                 $push->title = $request->title;
 
                 $push->user_id = $request->user->id;
 
-                $push->img = 'images/'.$name;
+                $push->img = $path;
 
                 $push->save();
 
@@ -131,8 +156,8 @@ class ActivityController extends Controller
 
         } catch (\Throwable $th) {
             
-            // return error();
-            return $th->getMessage();
+            return error();
+            // return $th->getMessage();
 
         }
     }
@@ -199,8 +224,8 @@ class ActivityController extends Controller
 
         } catch (\Throwable $th) {
             
-            // return error();
-            return $th->getMessage();
+            return error();
+            // return $th->getMessage();
 
         }
     }
@@ -212,7 +237,7 @@ class ActivityController extends Controller
     {
         try {
             
-            if(!$request->speak_id) return error('请选择社区文章');
+            if(!$request->speak_id) return error('请选择文章');
 
             if(!$request->content) return error('请填写评论内容');
 
@@ -220,13 +245,27 @@ class ActivityController extends Controller
 
             $comment_id = $request->comment_id ?? 0;
 
-            $res = \App\UserSpeak::create([
-                'user_id'   =>  $request->user->id,
-                'speak_id'  =>  $request->speak_id,
-                'content'   =>  $request->content,
-                'reply_id'  =>  $reply_id,
-                'comment_id'=>  $comment_id
-            ]);
+            if($request->a){
+
+                $res = \App\ActSpeaks::create([
+                    'user_id'   =>  $request->user->id,
+                    'userAct_id'  =>  $request->speak_id,
+                    'content'   =>  $request->content,
+                    'reply_id'  =>  $reply_id,
+                    'comment_id'=>  $comment_id
+                ]);
+
+            }else{
+
+                $res = \App\UserSpeak::create([
+                    'user_id'   =>  $request->user->id,
+                    'speak_id'  =>  $request->speak_id,
+                    'content'   =>  $request->content,
+                    'reply_id'  =>  $reply_id,
+                    'comment_id'=>  $comment_id
+                ]);
+
+            }
 
             if($res) return result('评论成功');
 

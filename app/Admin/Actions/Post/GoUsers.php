@@ -24,9 +24,9 @@ class GoUsers extends RowAction
 
         } 
 
-        $data = \App\ActSpeak::create([
+        $data = \App\ActSpeaks::create([
             'user_id'   =>  $id,
-            'speak_id'  =>  $model->speak_id,
+            'userAct_id'  =>  $model->speak_id,
             'content'   =>  $content,
             'reply_id'  =>  $model->user_id,
             'comment_id'=>  $model->comment_id != 0 ? $model->comment_id : $model->id

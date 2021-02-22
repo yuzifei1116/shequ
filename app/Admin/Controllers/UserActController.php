@@ -28,7 +28,7 @@ class UserActController extends AdminController
 
         $grid->column('id', __('索引'));
         $grid->column('title', __('文字'));
-        $grid->column('img', __('图片'));
+        $grid->column('img', __('图片'))->lightbox(['width' => 50, 'height' => 50]);
         $grid->column('user_id', __('用户'));
         $grid->column('is_show', __('是否显示'))->switch([
             'on'=>['value' => 1, 'text' => '是', 'color' => 'success'],
