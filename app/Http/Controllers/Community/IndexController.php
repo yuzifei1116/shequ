@@ -49,7 +49,7 @@ class IndexController extends Controller
                     if($v['img']){
                         $v['img'] = env('APP_URL').'storage/'.$v['img'];
                     }
-                    $v['end_time'] = date('Y-m-d',intval($v['end_time']));
+                    $v['end_time'] = date('Y-m-d',$v['end_time']);
                     switch ($v['rate_cate']) {
                         case '1':
                             $v['rate_cate'] = '季度';
@@ -238,7 +238,7 @@ class IndexController extends Controller
                     if($v['img']){
                         $v['img'] = env('APP_URL').'storage/'.$v['img'];
                     }
-                    $v['end_time'] = date('Y-m-d',intval($v['end_time']));
+                    $v['end_time'] = date('Y-m-d',$v['end_time']);
                     switch ($v['rate_cate']) {
                         case '1':
                             $v['rate_cate'] = '季度';
